@@ -1,12 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\CreateService;
+use App\Http\Livewire\UserIndex;
+use App\Http\Livewire\CreateUser;
 use App\Http\Livewire\ServiceIndex;
-use App\Http\Controllers\DashboardController;
-use App\Http\Livewire\UserInteractionReport;
-use App\Http\Livewire\UserCountReport;
+use App\Http\Livewire\CreateService;
 use App\Http\Livewire\ReportAnalisis;
+use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\UserCountReport;
+use App\Http\Livewire\UserInteractionReport;
+use App\Http\Controllers\DashboardController;
+use App\Http\Livewire\EditUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +41,13 @@ Route::middleware([
 });
 
 Route::get('/services', ServiceIndex::class)->name('services.index');
+
+Route::get('/users', UserIndex::class)->name('users.index');
+Route::get('/users/create', CreateUser::class)->name('users.create');
+Route::get('/users/{userId}/edit', EditUser::class)->name('users.edit');
+Route::post('/users/store', [CreateUser::class, 'saveUser'])->name('users.store');
+
+
 Route::get('/services/create', CreateService::class)->name('services.create');
 Route::post('/services/store', [CreateService::class, 'createService'])->name('services.store');
 Route::get('/service-detail/{serviceId}', [ServiceIndex::class, 'showServiceDetail'])->name('service-detail');

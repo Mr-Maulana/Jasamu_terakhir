@@ -22,10 +22,10 @@ class ServiceIndex extends Component
     }
 
     public function showServiceDetail($serviceId)
-{
-    $this->showDetail = true;
-    $this->selectedServiceId = $serviceId;
-}
+    {
+        $this->showDetail = true;
+        $this->selectedServiceId = $serviceId;
+    }
 
     public function backToIndex()
     {
@@ -41,5 +41,4 @@ class ServiceIndex extends Component
 
         session()->flash('success', 'Service berhasil dihapus.');
     }
-
 }
