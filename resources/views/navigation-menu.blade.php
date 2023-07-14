@@ -26,11 +26,15 @@
                         {{ __('Report Analisis') }}
                     </x-nav-link>
                 </div>
+
+                @if (Auth::user()->roles == 'ADMIN')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.index')">
                         {{ __('User Management') }}
                     </x-nav-link>
                 </div>
+                @endif
+
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
