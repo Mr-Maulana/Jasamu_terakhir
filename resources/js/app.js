@@ -1,21 +1,24 @@
-import './bootstrap';
+import "./bootstrap";
 
-import Alpine from 'alpinejs';
-import focus from '@alpinejs/focus';
+import focus from "@alpinejs/focus";
+import Alpine from "alpinejs";
+import Swal from "sweetalert2";
+
+window.Swal = Swal;
 window.Alpine = Alpine;
 
 Alpine.plugin(focus);
 
 Alpine.start();
 
-require('./bootstrap');
+require("./bootstrap");
 
 // Livewire Hooks
-document.addEventListener('livewire:load', function () {
-    Livewire.on('userInteractionChart', function (data) {
+document.addEventListener("livewire:load", function () {
+    Livewire.on("userInteractionChart", function (data) {
         // Render daily chart
-        new Chart(document.getElementById('daily-chart'), {
-            type: 'bar',
+        new Chart(document.getElementById("daily-chart"), {
+            type: "bar",
             data: data.daily,
             options: {
                 responsive: true,
@@ -28,8 +31,8 @@ document.addEventListener('livewire:load', function () {
         });
 
         // Render monthly chart
-        new Chart(document.getElementById('monthly-chart'), {
-            type: 'line',
+        new Chart(document.getElementById("monthly-chart"), {
+            type: "line",
             data: data.monthly,
             options: {
                 responsive: true,
@@ -42,8 +45,8 @@ document.addEventListener('livewire:load', function () {
         });
 
         // Render yearly chart
-        new Chart(document.getElementById('yearly-chart'), {
-            type: 'bar',
+        new Chart(document.getElementById("yearly-chart"), {
+            type: "bar",
             data: data.yearly,
             options: {
                 responsive: true,
@@ -56,10 +59,10 @@ document.addEventListener('livewire:load', function () {
         });
     });
 
-    Livewire.on('userCountChart', function (data) {
+    Livewire.on("userCountChart", function (data) {
         // Render user count chart
-        new Chart(document.getElementById('user-count-chart'), {
-            type: 'line',
+        new Chart(document.getElementById("user-count-chart"), {
+            type: "line",
             data: data,
             options: {
                 responsive: true,
