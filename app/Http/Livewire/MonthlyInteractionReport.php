@@ -12,11 +12,9 @@ class MonthlyInteractionReport extends Component
 {
     public function render()
     {
-        // Ambil data bulan dan tahun saat ini
         $currentYear = Carbon::now()->year;
         $currentMonth = Carbon::now()->month;
 
-        // Ambil data MonthlyReport berdasarkan tahun dan bulan saat ini
         $monthlyReports = MonthlyReport::where('year', $currentYear)
             ->where('month', $currentMonth)
             ->get();
