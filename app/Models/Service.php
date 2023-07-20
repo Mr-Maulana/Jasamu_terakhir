@@ -21,12 +21,11 @@ class Service extends Model
 
     public function visits()
     {
-        return $this->hasMany(Visit::class);
+        return $this->hasMany(ServiceVisit::class);
     }
 
     public function getVisitsCountAttribute()
     {
         return $this->visits()->count();
-    }}
-
-    
+    }
+}

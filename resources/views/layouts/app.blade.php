@@ -39,10 +39,11 @@
         </div>
 
         @stack('modals')
-
-        @livewireScripts
-
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        @livewireScripts
+        @livewireChartsScripts
   
         <x-livewire-alert::scripts />
     </body>

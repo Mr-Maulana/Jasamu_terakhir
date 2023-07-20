@@ -18,6 +18,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "chart.js": "^4.3.0",
         "sweetalert2": "^11.7.16"
     }
 }
