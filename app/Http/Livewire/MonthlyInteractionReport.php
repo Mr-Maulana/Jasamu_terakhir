@@ -2,32 +2,43 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
+use Carbon\Carbon;
 use App\Models\Service;
+use Livewire\Component;
 use App\Models\MonthlyReport;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
-use Carbon\Carbon;
 
 class MonthlyInteractionReport extends Component
 {
     public function render()
     {
-        $currentYear = Carbon::now()->year;
-        $currentMonth = Carbon::now()->month;
+        // Ambil data kunjungan bulanan dari semua layanan
+        $monthlyReports = MonthlyReport::all();
 
-        $monthlyReports = MonthlyReport::where('year', $currentYear)
-            ->where('month', $currentMonth)
-            ->get();
-
-        $services = Service::all();
         $chart = (new ColumnChartModel())
             ->setTitle('Data Kunjungan Bulanan - ' . Carbon::now()->format('F Y'));
 
-        foreach ($services as $service) {
-            $interactions = $monthlyReports->where('service_id', $service->id)->sum('interactions');
-            $chart->addColumn($service->name, $interactions, '#' . substr(md5(rand()), 0, 6));
+        // Inisialisasi variabel untuk menyimpan total kunjungan per bulan
+        $totalInteractionsPerMonth = [];
+
+        // Inisialisasi variabel untuk menyimpan daftar layanan
+        $services = Service::all();
+
+        // Hitung total kunjungan per bulan dari data bulanan yang diperoleh
+        foreach ($monthlyReports as $monthlyReport) {
+            $monthLabel = Carbon::create($monthlyReport->year, $monthlyReport->month)->format('F Y');
+            if (isset($totalInteractionsPerMonth[$monthLabel])) {
+                $totalInteractionsPerMonth[$monthLabel][$monthlyReport->service->name] = $monthlyReport->interactions;
+            } else {
+                $totalInteractionsPerMonth[$monthLabel] = [$monthlyReport->service->name => $monthlyReport->interactions];
+            }
         }
 
-        return view('livewire.monthly-interaction-report', compact('chart', 'monthlyReports'));
+        // Tambahkan data total kunjungan per bulan ke dalam chart
+        foreach ($totalInteractionsPerMonth as $monthLabel => $interactionsPerService) {
+            $chart->addColumn($monthLabel, array_sum($interactionsPerService), '#' . substr(md5(rand()), 0, 6));
+        }
+
+        return view('livewire.monthly-interaction-report', compact('chart', 'services', 'totalInteractionsPerMonth'));
     }
 }

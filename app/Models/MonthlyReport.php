@@ -18,6 +18,11 @@ class MonthlyReport extends Model
             ->get();
     }
 
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+
     public static function saveMonthlyReport($serviceId, $year, $month, $interactions)
     {
         self::create([

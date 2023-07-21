@@ -19,6 +19,11 @@ class DailyReport extends Model
             ->get();
     }
 
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+
     public static function saveDailyReport($serviceId, $date, $interactions)
     {
         self::updateOrCreate(

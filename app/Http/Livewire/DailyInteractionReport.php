@@ -16,11 +16,32 @@ class DailyInteractionReport extends Component
         $chart = (new ColumnChartModel())
             ->setTitle('Data Kunjungan');
 
-        foreach ($services as $service) {
-            $interactions = $dailyReports->where('service_id', $service->id)->sum('interactions');
-            $chart->addColumn($service->name, $interactions, '#' . substr(md5(rand()), 0, 6));
+        // Sum interactions for each day and store it in an array
+        $interactionsPerDay = [];
+        foreach ($dailyReports as $dailyReport) {
+            $date = $dailyReport->created_at->format('d M');
+            if (isset($interactionsPerDay[$date])) {
+                $interactionsPerDay[$date] += $dailyReport->interactions;
+            } else {
+                $interactionsPerDay[$date] = $dailyReport->interactions;
+            }
         }
 
-        return view('livewire.daily-interaction-report', compact('chart', 'dailyReports'));
+        // Add the data to the chart
+        foreach ($interactionsPerDay as $date => $interactions) {
+            $chart->addColumn($date, $interactions, '#' . substr(md5(rand()), 0, 6));
+        }
+
+        // Get interactions per service
+        $interactionsPerService = [];
+        foreach ($services as $service) {
+            $interactionsPerService[$service->name] = 0;
+        }
+
+        foreach ($dailyReports as $dailyReport) {
+            $interactionsPerService[$dailyReport->service->name] += $dailyReport->interactions;
+        }
+
+        return view('livewire.daily-interaction-report', compact('chart', 'dailyReports', 'interactionsPerService'));
     }
 }
