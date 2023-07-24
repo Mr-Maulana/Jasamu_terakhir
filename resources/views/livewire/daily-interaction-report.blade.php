@@ -1,18 +1,23 @@
 <div>
-    <!-- Tabel untuk laporan interaksi harian -->
+    <div style="height: 32rem;">
+        <livewire:livewire-column-chart
+            :column-chart-model="$chart"
+        />
+    </div>
+
     <table>
         <thead>
             <tr>
-                <th>Date</th>
+                <th>Service</th>
                 <th>Interaction Count</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($reports as $report)
-            <tr>
-                <td>{{ $report->date }}</td>
-                <td>{{ $report->interaction_count }}</td>
-            </tr>
+            @foreach ($interactionsPerService as $service => $interactionCount)
+                <tr>
+                    <td>{{ $service }}</td>
+                    <td>{{ $interactionCount }}</td>
+                </tr>
             @endforeach
         </tbody>
     </table>

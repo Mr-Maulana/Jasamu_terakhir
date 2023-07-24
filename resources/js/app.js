@@ -3,15 +3,13 @@ import "./bootstrap";
 import focus from "@alpinejs/focus";
 import Alpine from "alpinejs";
 import Swal from "sweetalert2";
-
+// resources/js/chart.js
 window.Swal = Swal;
 window.Alpine = Alpine;
 
 Alpine.plugin(focus);
 
 Alpine.start();
-
-require("./bootstrap");
 
 // Livewire Hooks
 document.addEventListener("livewire:load", function () {

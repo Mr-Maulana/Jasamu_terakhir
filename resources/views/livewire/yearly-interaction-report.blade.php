@@ -1,17 +1,27 @@
 <div>
-    <h1 class="text-3xl font-bold mb-4">Yearly Interaction Report</h1>
-    <table class="table">
+    <div style="height: 32rem;">
+        <livewire:livewire-column-chart
+        :column-chart-model="$chart"
+    />
+     </div>
+
+     <table>
         <thead>
             <tr>
-                <th>Year</th>
-                <th>Interactions</th>
+                <th>Service</th>
+                <th>Kunjungan</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($reports as $report)
+            @foreach ($services as $service)
                 <tr>
-                    <td>{{ $report->year }}</td>
-                    <td>{{ $report->interactions }}</td>
+                    <td>{{ $service->name }}</td>
+                    <td>
+                        @php
+                            $totalInteractions = $yearlyReports->where('service_id', $service->id)->sum('interactions');
+                        @endphp
+                        {{ $totalInteractions }}
+                    </td>
                 </tr>
             @endforeach
         </tbody>
