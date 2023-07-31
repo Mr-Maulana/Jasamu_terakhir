@@ -4,9 +4,12 @@ namespace App\Http\Livewire;
 
 use App\Models\User;
 use Livewire\Component;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 
 class EditUser extends Component
 {
+    use LivewireAlert;
     public $userId;
     public $name;
     public $email;
